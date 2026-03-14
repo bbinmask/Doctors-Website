@@ -16,11 +16,11 @@ createRoot(document.getElementById("root")).render(
         autoClose={3000}
         closeOnClick
         pauseOnHover={false}
-      ></ToastContainer>
+      />
 
       <Provider store={medicareStore}>
         <App />
       </Provider>
     </BrowserRouter>
-  </StrictMode>
+  </StrictMode>,
 );

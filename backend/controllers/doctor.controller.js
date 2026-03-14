@@ -1,4 +1,4 @@
-import Booking from "../models/BookingSchema.js";
+import Appointment from "../models/AppointmentSchema.model.js";
 import Doctor from "../models/DoctorSchema.js";
 
 export const updateDoctor = async (req, res) => {
@@ -126,7 +126,7 @@ export const getDoctorProfile = async (req, res) => {
     }
 
     const { password, ...rest } = doctor._doc;
-    const appointments = await Booking.find({ doctor: doctorId });
+    const appointments = await Appointment.find({ doctor: doctorId });
     return res.status(200).json({
       success: true,
       message: "Profile info is getting",

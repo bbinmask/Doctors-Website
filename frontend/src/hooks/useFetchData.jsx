@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { token } from "../config";
 import { toast } from "react-toastify";
 const useFetchData = (url) => {
@@ -19,7 +18,7 @@ const useFetchData = (url) => {
 
         if (!res.ok) {
           setLoading(false);
-          // toast.error(result.message);
+          toast.error(result.message);
           throw new Error(result.message);
         }
 
@@ -27,7 +26,7 @@ const useFetchData = (url) => {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        // toast.error(error.message);
+        toast.error(error.message);
         setError(error.message + " 🤢");
       }
     };

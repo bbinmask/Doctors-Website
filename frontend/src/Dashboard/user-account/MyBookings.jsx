@@ -33,7 +33,7 @@ const MyBookings = () => {
           <h2 className="mt-5 text-center leading-7 text-[20px] font-semibold text-primaryColor">
             You did not book any doctor yet.
           </h2>
-          <Link to={"/doctors"} className="btn w-fit">
+          <Link to={"/appointment"} className="btn w-fit">
             Book an appointment.
           </Link>
         </div>

@@ -1,5 +1,5 @@
 import User from "../models/UserSchema.js";
-import Booking from "../models/BookingSchema.js";
+import Appointment from "../models/AppointmentSchema.model.js";
 import Doctor from "../models/DoctorSchema.js";
 import bcrypt from "bcryptjs";
 export const updateUser = async (req, res) => {
@@ -9,7 +9,7 @@ export const updateUser = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(
       id,
       { $set: req.body },
-      { new: true }
+      { new: true },
     );
     return res.status(200).json({
       success: true,
@@ -91,20 +91,18 @@ export const getUserProfile = async (req, res) => {
 
 export const getMyAppointments = async (req, res) => {
   try {
-    const bookings = await Booking.find({ user: req.userId });
-
-    const doctorIds = bookings.map((el) => el.doctor.id);
-
-    const doctors = await Doctor.find({ _id: { $in: doctorIds } }).select(
-      "-password"
+    const appoinments = await Appointment.find({ user: req.userId }).populate(
+      "doctor",
+      "user",
     );
 
     return res.status(200).json({
       success: true,
-      message: "Appointments are getting",
-      data: doctors,
+      message: "Appointments found!",
+      data: appoinments,
     });
   } catch (error) {
+    console.log({ error: error.message });
     return res.status(500).json({
       success: false,
       message: "Something went wrong, cannot get the appointments!",
@@ -131,13 +129,13 @@ export const changePassword = async (req, res) => {
       {
         $set: { password: hashPassword },
       },
-      { new: true }
+      { new: true },
     );
     // const isPasswordCorrect = user.isPasswordCorrect(oldPassword);
 
     const updatedUser = await user.updateOne(
       { $set: { password: hashPassword } },
-      { new: true }
+      { new: true },
     );
 
     if (updatedUser) {

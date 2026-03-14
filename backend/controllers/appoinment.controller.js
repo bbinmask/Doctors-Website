@@ -20,29 +20,33 @@ export const makeAnAppoinment = async (req, res) => {
       phone,
     };
     const appointment = await Appoinment.bookAppointment(
+      req.userId,
       doctorId,
       date,
-      patientDetails
+      patientDetails,
     );
-    if (appointment.success) {
-      const doctor = await Doctor.findByIdAndUpdate(
-        doctorId,
-        {
-          $push: { appoinemnts: appointment.appointment._id },
-        },
-        { new: true }
-      );
-      return res.status(200).json({
-        success: true,
-        message: "Appointment Booked",
-        data: appointment.appointment,
-      });
-    }
+
     if (!appointment.success) {
       return res
         .status(404)
         .json({ success: false, message: "Could not booked appointment" });
     }
+
+    await Doctor.findByIdAndUpdate(
+      doctorId,
+      {
+        $push: { appoinemnts: appointment.appointment._id },
+      },
+      { new: true },
+    );
+
+    console.log({ appointment });
+
+    return res.status(200).json({
+      success: true,
+      message: "Appointment Booked",
+      data: appointment.appointment,
+    });
   } catch (error) {
     return res
       .status(500)

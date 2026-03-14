@@ -6,7 +6,12 @@ const AppointmentSchema = new mongoose.Schema(
     name: { type: String, required: true },
     email: { type: String },
     phone: { type: String, required: true },
-    bloodType: { type: String, required: true },
+    user: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    ticketPrice: { type: String, required: true },
     bloodType: { type: String, required: true },
     desease: { type: String, required: true },
     doctor: {
@@ -25,20 +30,26 @@ const AppointmentSchema = new mongoose.Schema(
       default: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 AppointmentSchema.statics.bookAppointment = async function (
+  userId,
   doctorId,
   date,
-  patientDetails
+  patientDetails,
 ) {
   const Appointment = this;
 
   // Check if the doctor is available today
   const today = new Date();
+  const doctor = await Doctor.findById(doctorId);
+  if (!doctor)
+    return {
+      success: false,
+      message: "Doctor is not found!",
+    };
   if (new Date(date).toDateString() === today.toDateString()) {
-    const doctor = await Doctor.findById(doctorId);
     if (!doctor || doctor.isApproved !== "approved") {
       return {
         success: false,
@@ -58,7 +69,9 @@ AppointmentSchema.statics.bookAppointment = async function (
     // Mark the appointment as delayed
     const delayedAppointment = await Appointment.create({
       ...patientDetails,
+      user: userId,
       doctor: doctorId,
+      ticketPrice: doctor.ticketPrice,
       appointmentDate: new Date(date),
       status: "delayed",
     });
