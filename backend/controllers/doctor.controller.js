@@ -8,7 +8,7 @@ export const updateDoctor = async (req, res) => {
     const updatedDoctor = await Doctor.findByIdAndUpdate(
       id,
       { $set: req.body },
-      { new: true }
+      { new: true },
     );
     return res.status(200).json({
       success: true,
@@ -74,7 +74,7 @@ export const getAllDoctor = async (req, res) => {
         .lean();
     } else {
       doctors = await Doctor.find({ isApproved: "approved" }).select(
-        "-password"
+        "-password",
       );
     }
     return res
@@ -89,6 +89,7 @@ export const getInitDoctor = async (_, res) => {
   try {
     const doctor = await Doctor.find({ isApproved: "approved" })
       .select("-password")
+      .sort("desc")
       .limit(3);
     if (doctor.length === 0) {
       return res.status(404).json({

@@ -8,21 +8,22 @@ import userRoute from "./Routes/user.routes.js";
 import reviewRoute from "./Routes/review.routes.js";
 import appointmentRoute from "./Routes/appoinment.routes.js";
 import doctorRoute from "./Routes/doctor.routes.js";
-
+import Doctor from "./models/DoctorSchema.js";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 
 const corsOptions = {
   origin: true,
 };
 
-app.get("/", (req, res) => {
+app.get("/api", async (req, res) => {
   res.send("Api is working");
 });
 
 // database connection
+
 mongoose.set("strictQuery", false);
 const connectDB = async () => {
   try {

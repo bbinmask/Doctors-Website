@@ -24,7 +24,7 @@ const DoctorCard = ({ doctor }) => {
         <div className="p-3 lg:p-5 w-fit border rounded-lg">
           <Link to={`/doctors/${id}`} className="">
             <img
-              className="w-80 h-96 rounded-t-2xl "
+              className="w-80 h-96 rounded-t-2xl object-cover"
               src={photo}
               alt="doctor"
             />

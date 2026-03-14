@@ -33,6 +33,7 @@ const Doctors = () => {
       setLoading(false); // Set loading to false after the API call
     }
   };
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(false);

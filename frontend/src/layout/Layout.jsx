@@ -5,11 +5,11 @@ import Footer from "../components/Footer/Footer";
 const Layout = () => {
   return (
     <>
-      <Header></Header>
-      <main className="">
-        <Routers></Routers>
+      <Header />
+      <main>
+        <Routers />
       </main>
-      <Footer></Footer>
+      <Footer />
     </>
   );
 };

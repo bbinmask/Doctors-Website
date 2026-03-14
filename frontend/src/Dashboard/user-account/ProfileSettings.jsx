@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import uploadImageTo from "../../Utils/uploadOn.js";
+import uploadImageTo from "../../Utils/uploadOnCloudinary.js";
 import axios from "axios";
 import { BASE_URL, token } from "../../config.js";
 import { toast } from "react-toastify";
