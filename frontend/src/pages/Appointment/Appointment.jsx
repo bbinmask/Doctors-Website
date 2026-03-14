@@ -23,6 +23,7 @@ const Appointment = () => {
   const [error, setError] = useState(null);
   const [search, setSearch] = useState(null);
   const [doctor, setDoctor] = useState(null);
+
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -59,7 +60,7 @@ const Appointment = () => {
       setSelectedDoctor(null);
       setSelect(false);
     } else {
-      setSelectedDoctor(doctor._id);
+      setSelectedDoctor(doctor);
     }
 
     setFormData({ ...formData, doctorId: doctor._id });
@@ -116,7 +117,7 @@ const Appointment = () => {
               <input
                 onChange={handleInputChange}
                 type="text"
-                value={user?.name}
+                value={formData.name}
                 className="w-full pr-5 py-3 border-b border-solid border-[#0066ff34] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor placeholder:text-base font-medium pl-2 "
                 name="name"
                 placeholder="Full Name"
@@ -127,7 +128,7 @@ const Appointment = () => {
               <input
                 onChange={handleInputChange}
                 type="tel"
-                value={user?.phone}
+                value={formData.phone}
                 className="w-full pr-5 py-3 border-b border-solid border-[#0066ff34] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor placeholder:text-base font-medium pl-2 "
                 name="phone"
                 placeholder="phone"
@@ -138,7 +139,7 @@ const Appointment = () => {
               <input
                 onChange={handleInputChange}
                 type="text"
-                value={user?.bloodType}
+                value={formData.bloodType}
                 className="w-full pr-5 py-3 font-semibold border-b border-solid border-[#0066ff34] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor pl-2 "
                 name="bloodType"
                 placeholder="Blood Type"
@@ -203,7 +204,9 @@ const Appointment = () => {
                 type="submit"
                 className="w-fit bg-primaryColor px-4 py-3 text-white text-[18px] leading-[30px] rounded-lg"
               >
-                Book Appointment
+                Book Appointment{" "}
+                {selectedDoctor.ticketPrice &&
+                  `( Pay: ₹${selectedDoctor.ticketPrice})`}
               </button>
             </div>
           </form>

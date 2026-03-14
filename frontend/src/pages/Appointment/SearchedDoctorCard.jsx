@@ -17,12 +17,12 @@ const SearchedDoctorCard = ({ doctor, onSelectedDoc, selectedDoctor }) => {
   return (
     <div
       className={`${
-        selectedDoctor == id ? "ring-green-500" : "hover:ring-green-500"
+        selectedDoctor._id == id ? "ring-green-500" : "hover:ring-green-500"
       } mt-5 w-[178px] relative border rounded-lg rounded-t-2xl cursor-pointer `}
       onClick={() => onSelectedDoc(doctor)}
     >
       <div className="relative">
-        {selectedDoctor == id && (
+        {selectedDoctor._id == id && (
           <FaCheck
             className="w-20 h-20 absolute top-20 left-12"
             color="#46e63b"
