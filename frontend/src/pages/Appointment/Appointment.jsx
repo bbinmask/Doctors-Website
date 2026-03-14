@@ -78,10 +78,12 @@ const Appointment = () => {
         const res = await axios.post(
           `${BASE_URL}/appointment/new-appointment`,
           formData,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: { Authorization: `Bearer ${token}` } },
         );
 
-        const data = await res?.data;
+        const data = res?.data;
+
+        console.log({ data });
         setError(null);
       } catch (error) {
         setError(error.message || "Something went wrong!");
@@ -198,7 +200,7 @@ const Appointment = () => {
             </form>
           </div>
         </section>
-        <section className="bg-[#fff9ea] w-full lg:w-2/4">
+        <section className="bg-[#fff9ea] w-full max-h-[800px] overflow-y-scroll">
           <div className="container text-center">
             <h2 className="heading">Find a Doctor</h2>
             <div className="max-w-[570px] mt-[30px] mx-auto bg-[#0066ff2c] rounded-md flex items-center justify-between">
@@ -234,7 +236,7 @@ const Appointment = () => {
                 Doctor selected.
               </h2>
             )}
-            <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="w-full sm:grid flex flex-wrap sm:grid-cols-2 md:grid-cols-3 gap-4">
               {doctor &&
                 doctor.map((doctor, i) => (
                   <SearchedDoctorCard

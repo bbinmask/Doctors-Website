@@ -1,10 +1,7 @@
-import React from "react";
 import startIcon from "../../assets/images/star.png";
 import { Link } from "react-router-dom";
-import { BsArrowRight } from "react-icons/bs";
 import { formatePatient } from "../../Utils/formatePatient.js";
 import { FaCheck } from "react-icons/fa";
-import Error from "../../components/Error/Error.jsx";
 const SearchedDoctorCard = ({ doctor, onSelectedDoc, selectedDoctor }) => {
   const {
     _id: id,
@@ -20,18 +17,25 @@ const SearchedDoctorCard = ({ doctor, onSelectedDoc, selectedDoctor }) => {
   return (
     <div
       className={`${
-        selectedDoctor == id ? "shadow-dropShadow" : "hover:shadow-blurShadow"
-      } mt-5 w-[178px] border rounded-lg rounded-t-2xl cursor-pointer`}
+        selectedDoctor == id ? "ring-green-500" : "hover:ring-green-500"
+      } mt-5 w-[178px] relative border rounded-lg rounded-t-2xl cursor-pointer `}
       onClick={() => onSelectedDoc(doctor)}
     >
-      <div className="img_4x4 relative">
+      <div className="relative">
         {selectedDoctor == id && (
           <FaCheck
-            className="w-36 h-36 absolute top-4 left-4"
+            className="w-20 h-20 absolute top-20 left-12"
             color="#46e63b"
           />
         )}
-        <img className="rounded-t-2xl " src={photo} alt="doctor.jpg" />
+        <img
+          className="rounded-t-2xl img_4x4 "
+          src={
+            photo ||
+            "https://unsplash.com/illustrations/a-flat-icon-of-a-doctor-with-a-stethoscope-aSf7_rXvfe8"
+          }
+          alt="doctor.jpg"
+        />
       </div>
       <div className="block">
         <div className="flex flex-col w-full  justify-center">
@@ -63,11 +67,13 @@ const SearchedDoctorCard = ({ doctor, onSelectedDoc, selectedDoctor }) => {
           </span>
         </div>
       </div>
-      <div className="mb-2">
-        <h3 className="text-xs font-semibold text-headingColor">
-          {formatePatient(patientsCured)}+ patients cured successfully
-        </h3>
-      </div>
+      {patientsCured && (
+        <div className="mb-2">
+          <h3 className="text-xs font-semibold text-headingColor">
+            {`${formatePatient(patientsCured)} + patients cured successfully`}
+          </h3>
+        </div>
+      )}
     </div>
   );
 };

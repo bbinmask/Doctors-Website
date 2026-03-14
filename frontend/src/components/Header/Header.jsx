@@ -51,7 +51,7 @@ const Header = () => {
   return (
     <header className="header flex items-center" ref={headerRef}>
       <div className="container">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between font-[poppins]">
           {/* =========logo============ */}
           <div>
             <img src={logo} alt="logo" />

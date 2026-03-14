@@ -68,6 +68,9 @@ export const getAllDoctor = async (req, res) => {
         $or: [
           { name: { $regex: query, $options: "i" } },
           { specialization: { $regex: query, $options: "i" } },
+          { bio: { $regex: query, $options: "i" } },
+          { specialFields: { $regex: query, $options: "i" } },
+          { role: { $regex: query, $options: "i" } },
         ],
       })
         .select("-password")
@@ -89,7 +92,7 @@ export const getInitDoctor = async (_, res) => {
   try {
     const doctor = await Doctor.find({ isApproved: "approved" })
       .select("-password")
-      .sort("desc")
+      .sort({ createdAt: -1 })
       .limit(3);
     if (doctor.length === 0) {
       return res.status(404).json({

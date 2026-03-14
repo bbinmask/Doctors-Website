@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
 
 @layer base {
   section {
@@ -41,7 +42,7 @@
   }
 
   .img_4x4 {
-    @apply bg-contain bg-no-repeat w-44 h-44 object-cover object-25% overflow-hidden; /* object property for cropping the image*/
+    @apply bg-cover bg-no-repeat w-44 h-44 object-cover object-25% overflow-hidden; /* object property for cropping the image*/
   }
 }
 
