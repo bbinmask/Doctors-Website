@@ -8,7 +8,6 @@ import userRoute from "./routes/user.routes.js";
 import reviewRoute from "./routes/review.routes.js";
 import appointmentRoute from "./routes/appoinment.routes.js";
 import doctorRoute from "./routes/doctor.routes.js";
-import Doctor from "./models/DoctorSchema.js";
 dotenv.config();
 
 const app = express();
