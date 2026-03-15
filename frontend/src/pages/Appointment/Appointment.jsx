@@ -84,7 +84,6 @@ const Appointment = () => {
 
         const data = res?.data;
 
-        console.log({ data });
         setError(null);
       } catch (error) {
         setError(error.message || "Something went wrong!");

@@ -22,7 +22,6 @@ const Feedback = ({ id, doctor, setDoctor }) => {
     };
     fetchData();
   }, []);
-  console.log(reviews);
   return (
     <>
       <div className="mb-[50px]">

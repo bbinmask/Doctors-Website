@@ -44,9 +44,7 @@ export const AppointmentModal = ({ appointment, onClose }) => {
         onClose();
         toast.success(data?.message || "Appointment cancelled!");
       }
-      console.log(data);
     } catch (error) {
-      console.log(error);
       toast.error(error.message || "Something went wrong!");
       throw new Error(error);
     } finally {

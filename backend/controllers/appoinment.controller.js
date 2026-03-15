@@ -46,7 +46,6 @@ export const makeAnAppoinment = async (req, res) => {
       data: appointment.appointment,
     });
   } catch (error) {
-    console.log({ error: error.message });
     return res
       .status(500)
       .json({ success: false, message: "Something went wrong!" });
