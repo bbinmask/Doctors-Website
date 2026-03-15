@@ -14,15 +14,15 @@ import Appointment from "../pages/Appointment/Appointment";
 const Routers = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/home" element={<Home />}></Route>
-      <Route path="/doctors" element={<Doctors />}></Route>
-      <Route path="/doctors/:id" element={<DoctorDetails />}></Route>
-      <Route path="/login" element={<Login />}></Route>
-      <Route path="/register" element={<Signup />}></Route>
-      <Route path="/contact" element={<Contact />}></Route>
-      <Route path="/services" element={<Services />}></Route>
-      <Route path="/appointment" element={<Appointment />}></Route>
+      <Route path="/" element={<Home />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/doctors" element={<Doctors />} />
+      <Route path="/doctors/:id" element={<DoctorDetails />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Signup />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/services" element={<Services />} />
+      <Route path="/appointment" element={<Appointment />} />
       <Route
         path="/users/profile/me"
         element={

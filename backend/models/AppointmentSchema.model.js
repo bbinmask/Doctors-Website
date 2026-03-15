@@ -88,6 +88,8 @@ AppointmentSchema.statics.bookAppointment = async function (
   const newAppointment = await Appointment.create({
     ...patientDetails,
     doctor: doctorId,
+    user: userId,
+    ticketPrice: doctor.ticketPrice,
     appointmentDate: new Date(date),
     status: "confirmed",
   });

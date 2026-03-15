@@ -1,12 +1,10 @@
-import React from "react";
 import useFetchData from "../../hooks/useFetchData";
 import { BASE_URL } from "../../config";
-import DoctorCard from "../../components/Doctors/DoctorCard";
 import Loading from "../../components/Loader/Loading";
 import Error from "../../components/Error/Error";
 import { Link } from "react-router-dom";
-
-const MyBookings = () => {
+import { AppointmentCard } from "./AppointmentCard";
+const MyAppointments = () => {
   const {
     data: appointments,
     loading,
@@ -14,7 +12,7 @@ const MyBookings = () => {
   } = useFetchData(`${BASE_URL}/users/appointments/my-appointments`);
 
   return (
-    <section className="">
+    <section>
       <h1 className="text-headingColor text-3xl font-bold text-center">
         Bookings
       </h1>
@@ -22,8 +20,8 @@ const MyBookings = () => {
       {error && !loading && <Error errorMessage={error} />}
       {!loading && !error && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {appointments.map((doctor) => (
-            <DoctorCard doctor={doctor} key={doctor._id} />
+          {appointments.map((appoint) => (
+            <AppointmentCard appointment={appoint} key={appoint._id} />
           ))}
         </div>
       )}
@@ -42,4 +40,4 @@ const MyBookings = () => {
   );
 };
 
-export default MyBookings;
+export default MyAppointments;

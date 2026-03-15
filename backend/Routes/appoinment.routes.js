@@ -11,8 +11,8 @@ import {
 const router = express.Router();
 
 router.post("/new-appointment", authenticate, makeAnAppoinment);
-router.post("/your-req/:id", deleteAppointment);
-router.get("/:id", getAppoinment);
-router.post("/:id", updateAppointment);
+router.delete("/:id", authenticate, deleteAppointment);
+router.get("/:id", authenticate, getAppoinment);
+router.post("/:id", authenticate, updateAppointment);
 router.get("/check/:id", checkAppointmentStatus);
 export default router;

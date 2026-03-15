@@ -1,5 +1,4 @@
 import { useState } from "react";
-import userImg from "../../assets/images/doctor-img01.png";
 import { useDispatch } from "react-redux";
 import { resetUserInfo } from "../../store/userInfo.slice";
 import MyBookings from "./MyBookings";
@@ -8,6 +7,7 @@ import useGetProfile from "../../hooks/useFetchData";
 import { BASE_URL } from "../../config";
 import Loading from "../../components/Loader/Loading";
 import Error from "../../components/Error/Error";
+import { User } from "lucide-react";
 const MyAccount = () => {
   const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ const MyAccount = () => {
 
   return (
     <section>
-      <div className="max-w-[1170px] px-5 mx-auto">
+      <div className="max-w-[1170px] px-5 mx-auto font-[poppins]">
         {loading && !error && <Loading />}
 
         {error && !loading && <Error errorMessage={error} />}
@@ -35,11 +35,15 @@ const MyAccount = () => {
             <div className="pb-[50px] px-[30px] rounded-md">
               <div className="flex items-center justify-center">
                 <figure className="w-[100px] h-[100px] rounded-full border-2 border-solid border-primaryColor">
-                  <img
-                    src={userImg}
-                    alt=""
-                    className="w-full h-full rounded-full"
-                  />
+                  {userData?.photo ? (
+                    <img
+                      src={userData?.photo}
+                      alt=""
+                      className="w-full h-full rounded-full"
+                    />
+                  ) : (
+                    <User className="h-full w-full p-4" />
+                  )}
                 </figure>
               </div>
               <div className="text-center mt-4">
@@ -76,7 +80,7 @@ const MyAccount = () => {
                   className={`${
                     tab == "bookings" &&
                     "bg-primaryColor text-white font-normal"
-                  } p-2 mr-5 px-5 rounded-md text-headingColor font-semibold text-base leading-7 border border-solid border-primaryColor`}
+                  } p-2 mr-5 px-5 rounded-md text-headingColor font-semibold text-sm leading-7 border border-solid border-primaryColor`}
                 >
                   My Bookings
                 </button>
@@ -85,7 +89,7 @@ const MyAccount = () => {
                   className={`${
                     tab == "settings" &&
                     "bg-primaryColor text-white font-normal"
-                  } p-2 mr-5 px-5 rounded-md text-headingColor font-semibold text-base leading-7 border border-solid border-primaryColor`}
+                  } p-2 mr-5 px-5 rounded-md text-headingColor font-semibold text-sm leading-7 border border-solid border-primaryColor`}
                 >
                   Profile Settings
                 </button>

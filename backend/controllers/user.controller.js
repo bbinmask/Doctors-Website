@@ -91,10 +91,10 @@ export const getUserProfile = async (req, res) => {
 
 export const getMyAppointments = async (req, res) => {
   try {
-    const appoinments = await Appointment.find({ user: req.userId }).populate(
+    const appoinments = await Appointment.find({ user: req.userId }).populate([
       "doctor",
       "user",
-    );
+    ]);
 
     return res.status(200).json({
       success: true,
@@ -102,7 +102,6 @@ export const getMyAppointments = async (req, res) => {
       data: appoinments,
     });
   } catch (error) {
-    console.log({ error: error.message });
     return res.status(500).json({
       success: false,
       message: "Something went wrong, cannot get the appointments!",

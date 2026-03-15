@@ -40,21 +40,36 @@ export const makeAnAppoinment = async (req, res) => {
       { new: true },
     );
 
-    console.log({ appointment });
-
     return res.status(200).json({
       success: true,
       message: "Appointment Booked",
       data: appointment.appointment,
     });
   } catch (error) {
+    console.log({ error: error.message });
     return res
       .status(500)
       .json({ success: false, message: "Something went wrong!" });
   }
 };
 
-export const deleteAppointment = async (req, res) => {};
+export const deleteAppointment = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    await Appoinment.findByIdAndDelete(id);
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Appointment Cancelled!" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: "Something went wrong!" });
+  }
+
+  res.send("Good");
+};
 
 export const updateAppointment = async (req, res) => {};
 

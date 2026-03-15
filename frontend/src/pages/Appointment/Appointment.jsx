@@ -56,15 +56,15 @@ const Appointment = () => {
 
   const handleSelectedDoc = (doctor) => {
     setSelect(true);
-    if (selectedDoctor == doctor._id) {
+
+    if (selectedDoctor == doctor?._id) {
       setSelectedDoctor(null);
       setSelect(false);
     } else {
       setSelectedDoctor(doctor);
     }
 
-    setFormData({ ...formData, doctorId: doctor._id });
-    // setDoctor([doctor]);
+    setFormData({ ...formData, doctorId: doctor?._id });
   };
 
   const submitHandler = async (e) => {
@@ -105,6 +105,7 @@ const Appointment = () => {
 
     fetchData();
   }, []);
+
   return (
     <div className="flex flex-col lg:flex-row gap-4 justify-between w-full">
       <section className="w-full">
@@ -205,8 +206,8 @@ const Appointment = () => {
                 className="w-fit bg-primaryColor px-4 py-3 text-white text-[18px] leading-[30px] rounded-lg"
               >
                 Book Appointment{" "}
-                {selectedDoctor.ticketPrice &&
-                  `( Pay: ₹${selectedDoctor.ticketPrice})`}
+                {selectedDoctor?.ticketPrice &&
+                  `( Pay: ₹${selectedDoctor?.ticketPrice})`}
               </button>
             </div>
           </form>

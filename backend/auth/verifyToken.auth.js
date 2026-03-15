@@ -7,6 +7,8 @@ export const authenticate = async (req, res, next) => {
 
   const authToken = req.headers.authorization;
 
+  console.log({ token: req.headers });
+
   // check token is exists
 
   if (!authToken || !authToken.startsWith("Bearer ")) {
