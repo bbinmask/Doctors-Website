@@ -9,7 +9,7 @@ import {
 } from "../controllers/doctor.controller.js";
 import { authenticate, restrict } from "../auth/verifyToken.auth.js";
 import { Router } from "express";
-import reviewRoute from "../routes/review.routes.js";
+import reviewRoute from "./review.routes.js";
 
 const router = Router();
 
