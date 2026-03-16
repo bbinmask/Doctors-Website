@@ -1,4 +1,4 @@
-import startIcon from "../../images/star.png";
+import startIcon from "@/assets/images/star.png";
 import { Link } from "react-router-dom";
 import { formatePatient } from "../../Utils/formatePatient.js";
 import { FaCheck } from "react-icons/fa";

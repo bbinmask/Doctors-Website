@@ -1,5 +1,5 @@
 import React from "react";
-import startIcon from "../../images/star.png";
+import startIcon from "@/assets/images/star.png";
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 import { formatePatient } from "../../Utils/formatePatient.js";

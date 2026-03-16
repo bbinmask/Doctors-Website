@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { token } from "../config";
-import { toast } from "react-toastify";
 const useFetchData = (url) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,7 +17,6 @@ const useFetchData = (url) => {
 
         if (!res.ok) {
           setLoading(false);
-          toast.error(result.message);
           throw new Error(result.message);
         }
 
@@ -26,7 +24,6 @@ const useFetchData = (url) => {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        toast.error(error.message);
         setError(error.message + " 🤢");
       }
     };

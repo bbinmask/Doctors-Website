@@ -1,13 +1,13 @@
-import heroImage01 from "../images/hero-img01.png";
-import heroImage02 from "../images/hero-img02.png";
-import heroImage03 from "../images/hero-img03.png";
-import icon01 from "../images/icon01.png";
-import icon02 from "../images/icon02.png";
-import icon03 from "../images/icon03.png";
-import videoIcon from "../images/video-icon.png";
-import avatarIcon from "../images/avatar-icon.png";
-import featureImg from "../images/feature-img.png";
-import faqImg from "../images/faq-img.png";
+import heroImage01 from "@/assets/images/hero-img01.png";
+import heroImage02 from "@/assets/images/hero-img02.png";
+import heroImage03 from "@/assets/images/hero-img03.png";
+import icon01 from "@/assets/images/icon01.png";
+import icon02 from "@/assets/images/icon02.png";
+import icon03 from "@/assets/images/icon03.png";
+import videoIcon from "@/assets/images/video-icon.png";
+import avatarIcon from "@/assets/images/avatar-icon.png";
+import featureImg from "@/assets/images/feature-img.png";
+import faqImg from "@/assets/images/faq-img.png";
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 import About from "../components/About/About";
@@ -19,7 +19,6 @@ const Home = () => {
   return (
     <>
       {/* ======= hero section start ======== */}
-
       <section className="hero__section pt-[60px] 2xl:h-[800px]">
         <div className="container">
           <div className="flex flex-col lg:flex-row gap-[90px] items-center justify-between">
@@ -192,7 +191,7 @@ const Home = () => {
             </p>
           </div>
 
-          <ServiceList></ServiceList>
+          <ServiceList />
         </div>
       </section>
 

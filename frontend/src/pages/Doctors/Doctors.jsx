@@ -5,12 +5,10 @@ import axios from "axios";
 import { BASE_URL } from "../../config.js";
 import Error from "../../components/Error/Error.jsx";
 import Loading from "../../components/Loader/Loading.jsx";
+import useFetchData from "../../hooks/useFetchData.jsx";
 const Doctors = () => {
   const [doctors, setDoctor] = useState();
-  const [initDoctors, setInitDoctors] = useState(null);
   const [search, setSearch] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const handleSearch = async () => {
     setLoading(true);
@@ -33,26 +31,11 @@ const Doctors = () => {
       setLoading(false); // Set loading to false after the API call
     }
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(false);
-      setError(false);
-
-      try {
-        const res = await axios.get(`${BASE_URL}/doctors/initial-doctors`);
-        const { data } = await res.data;
-
-        setInitDoctors(data);
-      } catch (error) {
-        console.error(error?.response?.data || error);
-        setError("Sorry, No Data Found");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+  const {
+    loading,
+    error,
+    data: initDoctors,
+  } = useFetchData(`${BASE_URL}/doctors/initial-doctors`);
 
   return (
     <>
