@@ -27,12 +27,14 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { data } = await axios.post(`${BASE_URL}/auth/login`, {
+      const { data: res } = await axios.post(`${BASE_URL}/auth/login`, {
         email: formData.email,
         password: formData.password,
       });
 
-      if (!data?.success) {
+      console.log({ res });
+
+      if (!res?.success) {
         throw new Error(data.message);
       }
       dispatch(setUserInfo(data));
@@ -43,7 +45,7 @@ const Login = () => {
       toast.success(data.message);
       navigate("/home");
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error?.response?.data?.message || error.message);
       console.error(error);
       setLoading(false);
     }

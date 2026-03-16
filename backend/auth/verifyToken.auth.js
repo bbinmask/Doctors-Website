@@ -40,15 +40,11 @@ export const authenticate = async (req, res, next) => {
 export const restrict = (roles) => async (req, res, next) => {
   const userId = req.userId;
 
-  let user;
+  let user = await User.findById(userId);
 
-  const patient = await User.findById(userId);
-  const doctor = await Doctor.findById(userId);
-
-  if (patient) {
-    user = patient;
+  if (!user) {
+    user = await Doctor.findById(userId);
   }
-  if (doctor) user = doctor;
 
   if (!roles.includes(user.role)) {
     return res

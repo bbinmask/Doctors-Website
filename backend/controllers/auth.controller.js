@@ -38,16 +38,12 @@ export const register = async (req, res) => {
       });
     }
 
-    // Hash the password
-    const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(password, salt);
-
     // Create new user
     if (role == "patient") {
       user = new User({
         name,
         email,
-        password: hashPassword,
+        password,
         photo,
         gender,
         role,
@@ -56,7 +52,7 @@ export const register = async (req, res) => {
       user = new Doctor({
         name,
         email,
-        password: hashPassword,
+        password,
         photo,
         gender,
         role,
@@ -86,29 +82,32 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   const { password, email } = req.body;
+
   try {
-    let user = null;
-    const patient = await User.findOne({ email });
-    const doctor = await Doctor.findOne({ email });
-    if (patient) user = patient;
-    if (doctor) user = doctor;
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await Doctor.findOne({ email });
+    }
 
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: "Maybe you don't have a account. Sign up first!",
+        message: "Maybe you don't have an account. Sign up first!",
       });
     }
 
-    const isPasswordCorrect = await user.isPasswordCorrect(password);
+    const isPasswordCorrect = await user.isPasswordCorrect(password.trim());
 
     if (!isPasswordCorrect) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Invalid credentials" });
+      return res.status(401).json({
+        success: false,
+        message: "Password not matched!",
+      });
     }
 
     const token = generateToken(user);
+
     const { role, ...rest } = user._doc;
 
     return res.status(200).json({
@@ -119,6 +118,11 @@ export const login = async (req, res) => {
       role,
     });
   } catch (error) {
-    return res.status(500).json({ success: false, message: "Failed to login" });
+    console.log(error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to login",
+    });
   }
 };
