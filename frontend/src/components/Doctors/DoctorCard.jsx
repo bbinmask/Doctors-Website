@@ -56,9 +56,7 @@ const DoctorCard = ({ doctor }) => {
             <div className="mt-[18px] lg:mt-5 flex items-center justify-between"></div>
           </div>
           <div className="">
-            <h3 className="text-base leading-7 mt-2 lg:text-[18px] lg:leading-[30px] font-semibold text-headingColor">
-              {formatePatient(patientsCured)}+ patients
-            </h3>
+            {" "}
             <p className="text-[14px] leading-6 font-normal text-textColor">
               {hospital}
             </p>
