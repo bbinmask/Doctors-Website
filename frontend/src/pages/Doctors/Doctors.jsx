@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../config.js";
 import Error from "../../components/Error/Error.jsx";
-import Loading from "../../components/Loader/Loading.jsx";
+import LoadingSpinner from "../../components/Loader/Loading.jsx";
 import useFetchData from "../../hooks/useFetchData.jsx";
 const Doctors = () => {
   const [doctors, setDoctor] = useState();
   const [search, setSearch] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = async () => {
     setLoading(true);
@@ -31,11 +32,9 @@ const Doctors = () => {
       setLoading(false); // Set loading to false after the API call
     }
   };
-  const {
-    loading,
-    error,
-    data: initDoctors,
-  } = useFetchData(`${BASE_URL}/doctors/initial-doctors`);
+  const { error, data: initDoctors } = useFetchData(
+    `${BASE_URL}/doctors/initial-doctors`,
+  );
 
   return (
     <>
@@ -71,7 +70,7 @@ const Doctors = () => {
           </section>
         ))}
 
-      {loading && <Loading />}
+      {loading && <LoadingSpinner />}
       {error && <Error errorMessage={error || "Sorry, No data found."} />}
       {!loading && !error && (
         <div>
