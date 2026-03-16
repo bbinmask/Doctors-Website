@@ -7,7 +7,7 @@ const DoctorList = () => {
     loading,
     error,
     data: doctors,
-  } = useFetchData(`http://localhost:5000/api/v1/doctors/initial-doctors`);
+  } = useFetchData(`${BASE_URL}/doctors/initial-doctors`);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 lg:gap-[30px] mt-[30px] lg:mt-[55px]">

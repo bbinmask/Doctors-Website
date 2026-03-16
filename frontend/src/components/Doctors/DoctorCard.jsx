@@ -30,9 +30,8 @@ const DoctorCard = ({ doctor }) => {
             />
           </Link>
           <div className="block">
-            <div className="flex gap-2">
-              {" "}
-              <h2 className="text-[18px] leading-[10px] lg:text-[26px] lg:leading-[15px] text-headingColor font-bold mt-3 lg:mt-5 w-full">
+            <div className="flex gap-2 mt-1">
+              <h2 className="text-[base] leading-[10px] font-[poppins] tracking-tight text-nowrap text-headingColor font-bold mt-3 lg:mt-5 w-full">
                 {name}
               </h2>
               <p className="text__para text-sm w-fit">
