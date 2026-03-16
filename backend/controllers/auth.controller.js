@@ -7,7 +7,7 @@ const generateToken = (user) => {
   return jwt.sign(
     { id: user._id, role: user.role },
     process.env.JWT_SECRET_KEY,
-    { expiresIn: "15d" }
+    { expiresIn: "15d" },
   );
 };
 
@@ -94,9 +94,10 @@ export const login = async (req, res) => {
     if (doctor) user = doctor;
 
     if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found!" });
+      return res.status(404).json({
+        success: false,
+        message: "Maybe you don't have a account. Sign up first!",
+      });
     }
 
     const isPasswordCorrect = await user.isPasswordCorrect(password);

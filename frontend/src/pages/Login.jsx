@@ -27,12 +27,10 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post(`${BASE_URL}/auth/login`, {
+      const { data } = await axios.post(`${BASE_URL}/auth/login`, {
         email: formData.email,
         password: formData.password,
       });
-
-      const data = await response?.data;
 
       if (!data?.success) {
         throw new Error(data.message);
