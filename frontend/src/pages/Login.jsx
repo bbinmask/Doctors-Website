@@ -32,8 +32,6 @@ const Login = () => {
         password: formData.password,
       });
 
-      console.log({ res });
-
       if (!res?.success) {
         throw new Error(data.message);
       }
