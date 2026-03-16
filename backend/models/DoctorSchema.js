@@ -21,7 +21,7 @@ const DoctorSchema = new mongoose.Schema(
 
     bio: { type: String, maxLength: 50 },
     about: { type: String },
-    timeSlots: [{ time: { type: String } }, { exp: { type: String } }],
+    timeSlots: [{ start: { type: String } }, { end: { type: String } }],
     reviews: [{ type: mongoose.Types.ObjectId, ref: "Review" }],
     averageRating: {
       type: Number,
@@ -38,18 +38,6 @@ const DoctorSchema = new mongoose.Schema(
     },
     appointments: [
       { date: { type: String } },
-      {
-        appointments: {
-          type: mongoose.Types.ObjectId,
-          ref: "Appointment",
-        },
-      },
-    ],
-    appointmentsToday: [{ type: mongoose.Types.ObjectId, ref: "Appointment" }],
-    completedAppointments: [
-      {
-        date: { type: String },
-      },
       {
         appointments: {
           type: mongoose.Types.ObjectId,

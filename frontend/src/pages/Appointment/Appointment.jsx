@@ -4,9 +4,11 @@ import axios from "axios";
 import { BASE_URL, token } from "../../config";
 import SearchedDoctorCard from "../Appointment/SearchedDoctorCard";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const Appointment = () => {
   const { user } = useSelector((store) => store.user);
-
+  const router = useNavigate();
   const [formData, setFormData] = useState({
     name: user?.name || "",
     bloodType: user?.bloodType || "",
@@ -20,6 +22,7 @@ const Appointment = () => {
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [select, setSelect] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isRequesting, setIsRequesting] = useState(false);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState(null);
   const [doctor, setDoctor] = useState(null);
@@ -76,15 +79,17 @@ const Appointment = () => {
 
     const fetchData = async () => {
       try {
-        const res = await axios.post(
+        const { data } = await axios.post(
           `${BASE_URL}/appointment/new-appointment`,
           formData,
           { headers: { Authorization: `Bearer ${token}` } },
         );
 
-        const data = res?.data;
-
-        setError(null);
+        if (data?.success) {
+          toast.success(data?.message);
+          router("/users/profile/me");
+          setError(null);
+        }
       } catch (error) {
         setError(error.message || "Something went wrong!");
         console.error(error);
