@@ -27,12 +27,12 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { data: res } = await axios.post(`${BASE_URL}/auth/login`, {
+      const { data } = await axios.post(`${BASE_URL}/auth/login`, {
         email: formData.email,
         password: formData.password,
       });
 
-      if (!res?.success) {
+      if (!data?.success) {
         throw new Error(data.message);
       }
       dispatch(setUserInfo(data));
