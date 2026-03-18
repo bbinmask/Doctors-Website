@@ -1,16 +1,9 @@
-import { formatePatient } from "../../Utils/formatePatient";
 import { formateDate } from "../../Utils/formateDate";
 import { experienceAndHospital } from "../../Utils/experienceAndHospital";
+import { formatDoctorAbout } from "../../Utils/formatDoctorAbout";
 const DoctorsAbout = ({ doctor }) => {
-  const {
-    name,
-    bio,
-    about,
-    experiences,
-    qualifications,
-    specialFields,
-    patientsCured,
-  } = doctor;
+  const { name, bio, about, experiences, qualifications, specialFields } =
+    doctor;
 
   return (
     <div>
@@ -21,18 +14,7 @@ const DoctorsAbout = ({ doctor }) => {
             {name}
           </span>
         </h3>
-        <p className="text__para">{`${name} is an ${
-          qualifications.length >= 2
-            ? `${qualifications[0]} with ${qualifications[1]}`
-            : `${qualifications[0]}`
-        }. ${name} is an ${
-          specialFields.length >= 2
-            ? `${specialFields[0]} & ${specialFields[1]}`
-            : `${specialFields[0]}`
-        }. ${about} & ${bio.toLowerCase()} `}</p>
-        <p className="text__para">{`${name} successfully cured ${formatePatient(
-          patientsCured
-        )}+ patients`}</p>
+        <p className="text__para">{formatDoctorAbout(doctor)}</p>
       </div>
 
       <div className="mt-12">

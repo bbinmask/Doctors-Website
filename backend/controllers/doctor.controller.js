@@ -42,7 +42,8 @@ export const getSingleDoctor = async (req, res) => {
   try {
     const doctor = await Doctor.findById(id)
       .select("-password")
-      .populate("reviews");
+      .populate("reviews")
+      .lean();
     if (!doctor) {
       return res
         .status(404)
