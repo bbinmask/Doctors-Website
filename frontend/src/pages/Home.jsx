@@ -30,10 +30,11 @@ const Home = () => {
                   We help patients live a healthy, longer life
                 </h1>
                 <p className="text__para ">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Assumenda ex pariatur amet sequi quia. Saepe ipsam suscipit,
-                  necessitatibus ex perspiciatis ut, blanditiis earum soluta
-                  aliquid quam id voluptatum temporibus atque?
+                  Medicare is a web-based healthcare platform that allows
+                  patients to easily find doctors, view their profiles, and book
+                  appointments online. It provides a seamless experience for
+                  both patients and doctors to manage schedules and
+                  consultations efficiently.
                 </p>
               </div>
               <div className="mt-10 ">

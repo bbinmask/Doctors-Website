@@ -4,7 +4,7 @@ import axios from "axios";
 import { BASE_URL, token } from "../../config";
 import SearchedDoctorCard from "../Appointment/SearchedDoctorCard";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const Appointment = () => {
   const { user } = useSelector((store) => store.user);
@@ -19,13 +19,16 @@ const Appointment = () => {
     doctorId: null,
   });
 
+  const location = useLocation();
+  const passedDoctor = location.state?.doctor;
+
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [select, setSelect] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isRequesting, setIsRequesting] = useState(false);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState(null);
-  const [doctor, setDoctor] = useState(null);
+  const [doctors, setDoctors] = useState(null);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -45,7 +48,7 @@ const Appointment = () => {
       });
       const { data } = await res?.data;
       if (data) {
-        setDoctor(data);
+        setDoctors(data);
         setLoading(false);
         setError(null);
       }
@@ -104,7 +107,27 @@ const Appointment = () => {
     const fetchData = async () => {
       const { data } = await axios.get(`${BASE_URL}/doctors/initial-doctors`);
 
-      if (data.success) setDoctor(data.data);
+      if (data.success) {
+        let doctorsList = data.data;
+
+        if (passedDoctor) {
+          const filteredDoctors = doctorsList.filter(
+            (doc) => doc._id !== passedDoctor._id,
+          );
+
+          doctorsList = [passedDoctor, ...filteredDoctors];
+
+          setSelectedDoctor(passedDoctor);
+          setSelect(true);
+
+          setFormData((prev) => ({
+            ...prev,
+            doctorId: passedDoctor._id,
+          }));
+        }
+
+        setDoctors(doctorsList);
+      }
     };
 
     fetchData();
@@ -235,7 +258,7 @@ const Appointment = () => {
             </button>
           </div>
 
-          {!doctor && !error && (
+          {!doctors && !error && (
             <div className="w-full h-72 flex justify-center items-center">
               <h1 className="heading">Search for a Doctor.</h1>
             </div>
@@ -254,8 +277,8 @@ const Appointment = () => {
             </h2>
           )}
           <div className="w-full sm:grid flex flex-wrap sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {doctor &&
-              doctor.map((doctor, i) => (
+            {doctors &&
+              doctors.map((doctor, i) => (
                 <SearchedDoctorCard
                   key={i}
                   doctor={doctor}
