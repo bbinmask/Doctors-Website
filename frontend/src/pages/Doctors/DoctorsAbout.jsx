@@ -1,69 +1,63 @@
-import { formateDate } from "../../Utils/formateDate";
-import { experienceAndHospital } from "../../Utils/experienceAndHospital";
-import { formatDoctorAbout } from "../../Utils/formatDoctorAbout";
-const DoctorsAbout = ({ doctor }) => {
-  const { name, bio, about, experiences, qualifications, specialFields } =
-    doctor;
+import { Award, BookOpen, Clock } from "lucide-react";
 
+const DoctorsAbout = ({ doctor }) => {
   return (
-    <div>
-      <div className="">
-        <h3 className="text-[20px]  leading-[30px] text-headingColor font-semibold flex items-center gap-2">
-          About of
-          <span className="text-irisBlueColor font-bold text-[24px] leading-9">
-            {name}
-          </span>
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      {/* Bio Card */}
+      <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+        <h3 className="text-xl font-black text-slate-800 mb-4 flex items-center gap-3">
+          <BookOpen size={24} className="text-blue-500" /> About Dr.{" "}
+          {doctor.name.split(" ").pop()}
         </h3>
-        <p className="text__para">{formatDoctorAbout(doctor)}</p>
+        <p className="text-slate-600 leading-relaxed font-medium">
+          {doctor.about}
+        </p>
+
+        <div className="mt-8 flex flex-wrap gap-2">
+          {doctor.specialFields?.map((field, idx) => (
+            <span
+              key={idx}
+              className="bg-slate-50 text-slate-600 px-4 py-2 rounded-xl text-xs font-bold border border-slate-100"
+            >
+              {field}
+            </span>
+          ))}
+        </div>
       </div>
 
-      <div className="mt-12">
-        <h3 className="text-[20px]  leading-[30px] text-headingColor font-semibold">
-          Education
-        </h3>
-        <ul className="pt-4 md:p-5">
-          {qualifications.map((qual, i) => (
-            <li
-              className="flex flex-col sm:flex-row sm:justify-between sm:items-end md:gap-5 mb-[30px]"
-              key={i}
-            >
-              <div className="">
-                <span className="text-irisBlueColor text-[15px] leading-6 font-semibold">
-                  {formateDate("09-13-2014")} - {formateDate("09-13-2016")}
-                </span>
-                <p className="text-base leading-6 font-medium text-textColor">
-                  {qual}
-                </p>
-                <p className="text-[14px] leading-6 font-medium text-textColor">
-                  New Apollo Hospital, New York.
+      {/* Education & Experience Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+          <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-3">
+            <Award size={22} className="text-blue-500" /> Education
+          </h3>
+          <div className="space-y-6">
+            {doctor.qualifications?.map((q, idx) => (
+              <div key={idx} className="flex gap-4">
+                <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 shrink-0" />
+                <p className="text-sm font-bold text-slate-600 leading-tight">
+                  {q}
                 </p>
               </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+            ))}
+          </div>
+        </div>
 
-      <div className="mt-12">
-        <h3 className="text-[20px]  leading-[30px] text-headingColor font-semibold">
-          Experience
-        </h3>
-
-        <ul className="grid sm:grid-cols-2 gap-[30px] pt-4 md:p-5">
-          {experienceAndHospital(experiences)?.map((exp, i) => (
-            <li className="p-4 rounded bg-[#fff9ea]" key={i}>
-              <span className="text-yellowColor text-[18px] leading-6 font-semibold">
-                {/* {formateDate("09-13-2014")} - {formateDate("09-13-2016")} */}
-                {exp.years} of experience
-              </span>
-              <p className="text-base leading-6 font-medium text-textColor">
-                {specialFields[i]}
-              </p>
-              <p className="text-[14px] leading-6 font-medium text-textColor">
-                {exp.exp}
-              </p>
-            </li>
-          ))}
-        </ul>
+        <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+          <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-3">
+            <Clock size={22} className="text-blue-500" /> Experience
+          </h3>
+          <div className="space-y-6">
+            {doctor.experiences?.map((ex, idx) => (
+              <div key={idx} className="flex gap-4">
+                <div className="w-1.5 h-1.5 rounded-full bg-slate-300 mt-2 shrink-0" />
+                <p className="text-sm font-bold text-slate-600 leading-tight">
+                  {ex}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
