@@ -11,6 +11,8 @@ import { Routes, Route } from "react-router-dom";
 import Dashboard from "../Dashboard/doctor-account/Dashboard";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Appointment from "../pages/Appointment/Appointment";
+import { Appointments } from "../Dashboard/doctor-account/Appointments";
+import { Settings } from "../Dashboard/doctor-account/Settings";
 const Routers = () => {
   return (
     <Routes>
@@ -39,6 +41,22 @@ const Routers = () => {
           </ProtectedRoutes>
         }
       ></Route>
+      <Route
+        path="/appointments"
+        element={
+          <ProtectedRoutes allowedRoles={["doctors"]}>
+            <Appointments />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoutes allowedRoles={["doctors"]}>
+            <Settings />
+          </ProtectedRoutes>
+        }
+      />
     </Routes>
   );
 };

@@ -22,6 +22,25 @@ const navLinks = [
   },
 ];
 
+const docNavLinks = [
+  {
+    path: "/home",
+    display: "Home",
+  },
+  {
+    path: "/appointments",
+    display: "Appointments",
+  },
+  {
+    path: "/settings",
+    display: "Settings",
+  },
+  {
+    path: "/contact",
+    display: "Contact",
+  },
+];
+
 const Header = () => {
   const userInfo = useSelector((store) => store.user);
 
@@ -61,20 +80,35 @@ const Header = () => {
 
           <div className="navigation" ref={menuRef} onClick={toggleMenu}>
             <ul className="menu flex items-center gap-[2.7rem]">
-              {navLinks.map((link, i) => (
-                <li key={i}>
-                  <NavLink
-                    to={link.path}
-                    className={(navClass) =>
-                      navClass.isActive
-                        ? "text-primaryColor text-[16px] leading-7 font-semibold"
-                        : "text-textColor text-[16px] leading-7 font-[500] hover:text-primaryColor"
-                    }
-                  >
-                    {link.display}
-                  </NavLink>
-                </li>
-              ))}
+              {userInfo?.role === "doctor"
+                ? docNavLinks.map((link, i) => (
+                    <li key={i}>
+                      <NavLink
+                        to={`${link.path}`}
+                        className={(navClass) =>
+                          navClass.isActive
+                            ? "text-primaryColor text-[16px] leading-7 font-semibold"
+                            : "text-textColor text-[16px] leading-7 font-[500] hover:text-primaryColor"
+                        }
+                      >
+                        {link.display}
+                      </NavLink>
+                    </li>
+                  ))
+                : navLinks.map((link, i) => (
+                    <li key={i}>
+                      <NavLink
+                        to={link.path}
+                        className={(navClass) =>
+                          navClass.isActive
+                            ? "text-primaryColor text-[16px] leading-7 font-semibold"
+                            : "text-textColor text-[16px] leading-7 font-[500] hover:text-primaryColor"
+                        }
+                      >
+                        {link.display}
+                      </NavLink>
+                    </li>
+                  ))}
             </ul>
           </div>
 
