@@ -15,8 +15,12 @@ import ServiceList from "../components/Services/ServiceList";
 import DoctorList from "../components/Doctors/DoctorList";
 import FaqList from "../components/Faq/FaqList";
 import Testimonial from "../components/Testimonial/Testimonial";
-
+import Dashboard from "../Dashboard/doctor-account/Dashboard";
+import { useSelector } from "react-redux";
 const Home = () => {
+  const userInfo = useSelector((store) => store.user);
+
+  if (userInfo?.role === "doctor") return <Dashboard />;
   return (
     <>
       {/* ======= hero section start ======== */}

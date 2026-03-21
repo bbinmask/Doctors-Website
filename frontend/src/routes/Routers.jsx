@@ -32,19 +32,19 @@ const Routers = () => {
             <MyAccount />
           </ProtectedRoutes>
         }
-      ></Route>
+      />
       <Route
-        path="/doctors/profile/me"
+        path="/doctor/profile/me"
         element={
-          <ProtectedRoutes allowedRoles={["doctors"]}>
+          <ProtectedRoutes allowedRoles={["doctor"]}>
             <Dashboard />
           </ProtectedRoutes>
         }
-      ></Route>
+      />
       <Route
         path="/appointments"
         element={
-          <ProtectedRoutes allowedRoles={["doctors"]}>
+          <ProtectedRoutes allowedRoles={["doctor"]}>
             <Appointments />
           </ProtectedRoutes>
         }
@@ -52,7 +52,7 @@ const Routers = () => {
       <Route
         path="/settings"
         element={
-          <ProtectedRoutes allowedRoles={["doctors"]}>
+          <ProtectedRoutes allowedRoles={["doctor"]}>
             <Settings />
           </ProtectedRoutes>
         }

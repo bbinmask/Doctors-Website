@@ -1,15 +1,15 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../config";
 import { toast } from "react-toastify";
 import { setUserInfo } from "../store/userInfo.slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import HashLoader from "react-spinners/HashLoader";
 
 const Login = () => {
   const dispatch = useDispatch();
-
+  const userInfo = useSelector((store) => store.user);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -48,6 +48,15 @@ const Login = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (userInfo?.token) {
+      navigate("/home", {
+        replace: true,
+      });
+      toast.error("Unauthorized!");
+    }
+  }, []);
   return (
     <section>
       <div className="w-full max-w-[570px] mx-auto rounded-lg shadow-md md:p-10">
