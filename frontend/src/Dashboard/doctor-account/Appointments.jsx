@@ -1,46 +1,6 @@
 import { CheckCircle2, Loader2, XCircle } from "lucide-react";
-import { useState } from "react";
-import { useSelector } from "react-redux";
 import useFetchData from "../../hooks/useFetchData";
 import { BASE_URL } from "../../config";
-const MOCK_APPOINTMENTS = [
-  {
-    _id: "bk_1",
-    user: {
-      name: "Thomas Shelby",
-      photo: "https://i.pravatar.cc/150?u=1",
-      email: "t.shelby@peaky.com",
-    },
-    appointmentDate: new Date().toISOString(),
-    status: "pending",
-    isPaid: true,
-    ticketPrice: 120,
-  },
-  {
-    _id: "bk_2",
-    user: {
-      name: "Arthur Shelby",
-      photo: "https://i.pravatar.cc/150?u=2",
-      email: "a.shelby@peaky.com",
-    },
-    appointmentDate: new Date(Date.now() + 86400000).toISOString(),
-    status: "approved",
-    isPaid: true,
-    ticketPrice: 120,
-  },
-  {
-    _id: "bk_3",
-    user: {
-      name: "Polly Gray",
-      photo: "https://i.pravatar.cc/150?u=3",
-      email: "p.gray@peaky.com",
-    },
-    appointmentDate: new Date(Date.now() - 86400000).toISOString(),
-    status: "cancelled",
-    isPaid: false,
-    ticketPrice: 120,
-  },
-];
 
 export const Appointments = () => {
   const {
