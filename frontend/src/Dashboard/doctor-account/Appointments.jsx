@@ -9,6 +9,14 @@ export const Appointments = () => {
     error,
   } = useFetchData(`${BASE_URL}/doctors/appointments`);
 
+  const start = [{ start: "10:00 AM", end: "02:00 PM" }][0].start
+    .split(" ")[0]
+    .split(":");
+  const end = [{ start: "10:00 AM", end: "02:00 PM" }][0].end
+    .split(" ")[0]
+    .split(":");
+
+  console.log({ start, end });
   const handleStatusUpdate = (id, status) => {};
   return (
     <div className="bg-white font-[poppins] rounded-[2.5rem] border border-slate-200 shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -23,8 +31,10 @@ export const Appointments = () => {
       <div className="flex items-center py-12 justify-center">
         {loading ? (
           <Loader2 className="animate-spin" />
-        ) : error ? (
-          <div className="text__para font-semibold text-xl">No data found</div>
+        ) : error || !appointments || appointments?.length === 0 ? (
+          <div className="text__para font-semibold text-xl">
+            No appointments found
+          </div>
         ) : (
           <table className="w-full text-left">
             <thead className="bg-slate-50 text-slate-400 text-[10px] font-black uppercase tracking-widest">

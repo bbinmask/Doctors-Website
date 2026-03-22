@@ -19,6 +19,10 @@ const AppointmentSchema = new mongoose.Schema(
       ref: "Doctor",
       required: true,
     },
+    appointmentTime: {
+      type: String,
+      required: true,
+    },
     appointmentDate: { type: Date, required: true },
     status: {
       type: String,
@@ -43,27 +47,56 @@ AppointmentSchema.statics.bookAppointment = async function (
 
   // Check if the doctor is available today
   const today = new Date();
-  const doctor = await Doctor.findById(doctorId);
+  const doctor = await Doctor.findById(doctorId).lean();
   if (!doctor)
     return {
       success: false,
       message: "Doctor is not found!",
     };
-  if (new Date(date).toDateString() === today.toDateString()) {
-    if (!doctor || doctor.isApproved !== "approved") {
-      return {
-        success: false,
-        message: "Doctor is not available today.",
-      };
-    }
-  }
-
-  // Count existing appointments for the doctor on the specified date
 
   const appointmentCount = await Appointment.countDocuments({
     doctor: doctorId,
     appointmentDate: date,
   });
+
+  const getAppointmentTime = (startTime, count) => {
+    let [time, modifier] = startTime.split(" ");
+    let [hours, minutes] = time.split(":").map(Number);
+
+    if (modifier === "PM" && hours !== 12) {
+      hours += 12;
+    }
+    if (modifier === "AM" && hours === 12) {
+      hours = 0;
+    }
+
+    const totalMinutes = hours * 60 + minutes + count * 15;
+
+    let newHours = Math.floor(totalMinutes / 60);
+    let newMinutes = totalMinutes % 60;
+
+    let newModifier = "AM";
+    if (newHours >= 12) {
+      newModifier = "PM";
+    }
+
+    if (newHours > 12) {
+      newHours -= 12;
+    }
+    if (newHours === 0) {
+      newHours = 12;
+    }
+
+    newMinutes = newMinutes < 10 ? "0" + newMinutes : newMinutes;
+    newHours = newHours < 10 ? "0" + newHours : newHours;
+
+    return `${newHours}:${newMinutes} ${newModifier}`;
+  };
+
+  const appointmentTime = getAppointmentTime(
+    doctor.timeSlots[0].start,
+    appointmentCount,
+  );
 
   if (appointmentCount >= 10) {
     // Mark the appointment as delayed
@@ -73,6 +106,7 @@ AppointmentSchema.statics.bookAppointment = async function (
       doctor: doctorId,
       ticketPrice: doctor.ticketPrice,
       appointmentDate: new Date(date),
+      appointmentTime: "NA",
       status: "delayed",
     });
 
@@ -84,13 +118,13 @@ AppointmentSchema.statics.bookAppointment = async function (
     };
   }
 
-  // Book the appointment
   const newAppointment = await Appointment.create({
     ...patientDetails,
     doctor: doctorId,
     user: userId,
     ticketPrice: doctor.ticketPrice,
     appointmentDate: new Date(date),
+    appointmentTime,
     status: "confirmed",
   });
 
