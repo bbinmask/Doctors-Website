@@ -13,25 +13,23 @@ const Doctors = () => {
 
   const handleSearch = async () => {
     setLoading(true);
-    setError(null);
     try {
       const res = await axios.get(`${BASE_URL}/doctors`, {
         params: { query: search },
       });
 
       const { data } = res?.data;
+      console.log({ data });
       if (data) {
         setDoctor(data);
-        setLoading(false);
-        setError(null);
       }
     } catch (error) {
-      setError("Failed to fetch doctors. Please try again.");
       console.error(error);
     } finally {
-      setLoading(false); // Set loading to false after the API call
+      setLoading(false);
     }
   };
+
   const { error, data: initDoctors } = useFetchData(
     `${BASE_URL}/doctors/initial-doctors`,
   );

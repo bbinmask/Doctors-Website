@@ -161,3 +161,23 @@ export const getDoctorReviews = async (req, res) => {
     res.status(500).json({ success: false, message: "No Doctor found" });
   }
 };
+
+export const getAppointments = async (req, res) => {
+  const doctorId = req.userId;
+
+  try {
+    const appointments = await Appointment.find({ doctor: doctorId })
+      .populate(["user"])
+      .lean();
+
+    return res.status(200).json({
+      message: "Appointments found",
+      success: true,
+      data: appointments,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Something went wrong!", success: false });
+  }
+};

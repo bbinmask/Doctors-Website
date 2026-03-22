@@ -6,8 +6,6 @@ const ProtectedRoutes = ({ children, allowedRoles }) => {
 
   const isAllowed = allowedRoles.includes(userInfo?.role);
 
-  console.log({ isAllowed });
-
   const accessibleRoute =
     userInfo?.token && isAllowed ? (
       children

@@ -1,5 +1,8 @@
-import { CheckCircle2, XCircle } from "lucide-react";
-
+import { CheckCircle2, Loader2, XCircle } from "lucide-react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import useFetchData from "../../hooks/useFetchData";
+import { BASE_URL } from "../../config";
 const MOCK_APPOINTMENTS = [
   {
     _id: "bk_1",
@@ -40,41 +43,51 @@ const MOCK_APPOINTMENTS = [
 ];
 
 export const Appointments = () => {
-  const [appointments, setAppointments] = useState(MOCK_APPOINTMENTS);
+  const {
+    data: appointments,
+    loading,
+    error,
+  } = useFetchData(`${BASE_URL}/doctors/appointments`);
 
+  const handleStatusUpdate = (id, status) => {};
   return (
-    <div className="bg-white rounded-[2.5rem] border border-slate-200 shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="bg-white font-[poppins] rounded-[2.5rem] border border-slate-200 shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="p-8 border-b border-slate-50 flex justify-between items-center bg-slate-50/30">
         <h3 className="font-black text-slate-800 text-xl">All Bookings</h3>
         <div className="flex gap-2">
           <button className="px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 transition-all">
             Filter
           </button>
-          <button className="px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 transition-all">
-            Export CSV
-          </button>
         </div>
       </div>
-      <table className="w-full text-left">
-        <thead className="bg-slate-50 text-slate-400 text-[10px] font-black uppercase tracking-widest">
-          <tr>
-            <th className="py-4 px-8">Patient</th>
-            <th className="py-4 px-4">Appt. Date</th>
-            <th className="py-4 px-4">Status</th>
-            <th className="py-4 px-4">Payment</th>
-            <th className="py-4 px-4">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {appointments.map((app) => (
-            <AppointmentRow
-              key={app._id}
-              app={app}
-              onStatusChange={handleStatusUpdate}
-            />
-          ))}
-        </tbody>
-      </table>
+      <div className="flex items-center py-12 justify-center">
+        {loading ? (
+          <Loader2 className="animate-spin" />
+        ) : error ? (
+          <div className="text__para font-semibold text-xl">No data found</div>
+        ) : (
+          <table className="w-full text-left">
+            <thead className="bg-slate-50 text-slate-400 text-[10px] font-black uppercase tracking-widest">
+              <tr>
+                <th className="py-4 px-8">Patient</th>
+                <th className="py-4 px-4">Appt. Date</th>
+                <th className="py-4 px-4">Status</th>
+                <th className="py-4 px-4">Payment</th>
+                <th className="py-4 px-4">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {appointments.map((app) => (
+                <AppointmentRow
+                  key={app._id}
+                  app={app}
+                  onStatusChange={handleStatusUpdate}
+                />
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 };
@@ -84,7 +97,7 @@ export const AppointmentRow = ({ app, onStatusChange }) => (
     <td className="py-4 px-4">
       <div className="flex items-center gap-3">
         <img
-          src={app.user.photo}
+          src={app.user.photo || "/default.jpg"}
           className="w-10 h-10 rounded-xl object-cover"
           alt=""
         />
@@ -112,8 +125,8 @@ export const AppointmentRow = ({ app, onStatusChange }) => (
         {app.status}
       </span>
     </td>
-    <td className="py-4 px-4 text-sm font-black text-slate-800">
-      ${app.ticketPrice}
+    <td className="flex py-4 px-4 items-center text-sm font-black text-slate-800">
+      ₹{app.ticketPrice}
     </td>
     <td className="py-4 px-4">
       <div className="flex gap-2">
