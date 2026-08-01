@@ -15,7 +15,8 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 const corsOptions = {
-  origin: true,
+  origin: [process.env.PUBLIC_URL],
+  credentials: true,
 };
 
 app.get("/api", async (req, res) => {
@@ -47,5 +48,4 @@ app.use("/api/v1/appointment", appointmentRoute);
 
 app.listen(port, () => {
   connectDB();
-  console.warn("Server is running: ", port);
 });
