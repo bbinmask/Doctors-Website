@@ -8,14 +8,17 @@ import reviewRoute from "./Routes/review.routes.js";
 import appointmentRoute from "./Routes/appoinment.routes.js";
 import doctorRoute from "./Routes/doctor.routes.js";
 import authRoute from "./Routes/auth.routes.js";
-import Doctor from "./models/DoctorSchema.js";
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 const corsOptions = {
-  origin: [process.env.PUBLIC_URL],
+  origin: [
+    process.env.PUBLIC_URL,
+    "http://localhost:5173",
+    "https://medicityplus.vercel.app",
+  ],
   credentials: true,
 };
 
